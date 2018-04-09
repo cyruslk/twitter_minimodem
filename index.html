@@ -1,0 +1,70 @@
+<!doctype html>
+<html>
+   <head>
+      <title>twitter-minimodem</title>
+      <style>
+        button{
+          position: fixed;
+        }
+      </style>
+</header>
+<body>
+
+    <!-- <button value="cnn" onclick="changingFeed(this.value)">cnn</button> -->
+
+
+<div id="tweets"></div>
+
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="/socket.io/socket.io.js"></script>
+
+<script>
+
+  var socket = io.connect('/'),
+
+      tweets = document.getElementById('tweets');
+      socket.on('tweet', function (data) {
+      tweets.innerHTML = tweets.innerHTML + '<br>' + data;
+
+  });
+
+  function changingFeed(value) {
+      console.log(value)
+      socket.emit('changingFeed', {
+        value: value
+      });
+
+  }
+
+  var isScrolling;
+  var scrolldelay;
+
+  function pageScroll() {
+    window.scrollBy(0,1);
+    scrolldelay = setTimeout('pageScroll()',25); isScrolling = true;
+  }
+
+if(!isScrolling) {
+  pageScroll();
+} else {
+  isScrolling = false; clearTimeout(scrolldelay);
+}
+
+$(window).scroll(function() {
+   if($(window).scrollTop() + $(window).height() == $(document).height()) {
+      document.body.scrollTop = 0; // For Chrome, Safari and Opera
+      document.documentElement.scrollTop = 0; // For IE and Firefox
+
+   }
+});
+
+
+
+</script>
+
+
+
+
+</body>

@@ -1,0 +1,68 @@
+
+
+body{
+padding-left: 25px;
+top: 0px;
+background-color: black;
+color: white;
+font-size: 50px;
+font-family: arial;
+font-weight: 200;
+letter-spacing: 0px;
+transition: 0.5s;
+}
+
+        a{
+          color: white;
+          z-index: 1;
+          }
+
+
+          #buttons{
+            position: fixed;
+            background-color: white;
+            padding: 2vw;
+            border-radius: 50%;
+            z-index: -1
+          }
+
+          #buttons a{
+            color: black;
+            font-family: serif;
+          }
+
+
+          .next{
+              right: 25px;
+          }
+
+
+          @media (max-width: 500px) {
+          body{
+          padding-left: 10px;
+          font-size: 25px;
+          transition: 0.5s;
+          input[type=button]{
+          background-color: white;
+          border: none;
+          color: black;
+          padding: 15px 32px;
+          text-align: center;
+          text-decoration: none;
+          display: inline-block;
+          font-size: 16px;
+          margin: 4px 2px;
+          cursor: pointer;
+          }
+          ::selection{
+          background-color: yellow;
+          color: black;
+          }
+          iframe{
+          width: 50%;
+          text-align: right;
+          position: fixed;
+          float: right;
+          }
+
+}
