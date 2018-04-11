@@ -13,16 +13,16 @@ var twit = new twitter(require('./config.js'));
 
 var loudness = require('loudness');
 
-var volume = 20;
+var volume = 0;
 
 
 
     var myInt = setInterval(function () {
-      if(volume === 20){
-        volume = 0;
-      }else{
-        volume = 20;
-      }
+        if(volume === 20){
+          volume = 0;
+        }else{
+          volume = 20;
+        }
             console.log(volume);
 
             loudness.setVolume(volume, function (err) {
@@ -75,4 +75,4 @@ function handler(req, res) {
 }
 
 
-server.listen(1337);
+server.listen(1336);
