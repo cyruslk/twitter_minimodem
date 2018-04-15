@@ -53,6 +53,13 @@ io.on("connection", socket => {
 
     console.log("this is the picked string", "cnn");
 
+    twit.stream("statuses/filter", { track: "cnn"}, function(stream) {
+      stream.on("data", function(data) {
+        socket.emit("tweet", data.text);
+        child.stdin.write(data.text);
+      });
+    });
+
   });
 });
 
