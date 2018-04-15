@@ -13,15 +13,13 @@ var twit = new twitter(require('./config.js'));
 
 var loudness = require('loudness');
 
-var volume = 20;
-
-
+var volume = 50;
 
     var myInt = setInterval(function () {
-      if(volume === 20){
+      if(volume === 50){
         volume = 0;
       }else{
-        volume = 20;
+        volume = 50;
       }
             console.log(volume);
 
@@ -40,25 +38,21 @@ io.on("connection", socket => {
     "https://newsapi.org/v2/top-headlines?country=us&apiKey=dd476a63cfa14c7f9c64ea594175b59e";
   request(theNews, function(error, response, body) {
     var bodyObj = JSON.parse(body);
-    // console.log(bodyObj);
 
     function getRandomInt(max) {
       return Math.floor(Math.random() * Math.floor(max));
     }
 
-    var randomNumberFromNews = getRandomInt(bodyObj.articles.length);
-
-    var randomTitle = bodyObj.articles[randomNumberFromNews].source.name;
-    // console.log("is?", bodyObj.articles.length);
-    bodyObj.articles.map(ele => console.log(ele.source.name));
-    console.log("this is the picked string", randomTitle);
-
-    twit.stream("statuses/filter", { track: "cnn" }, function(stream) {
-      stream.on("data", function(data) {
-        socket.emit("tweet", data.text);
-        child.stdin.write(data.text);
-      });
+    var finalArray = bodyObj.articles.map(function(ele){
+      return ele.source.name.replace(".com", "");
     });
+
+    var randomNumberFromNews = getRandomInt(finalArray.length);
+    var randomTitle =finalArray[randomNumberFromNews];
+
+
+    console.log("this is the picked string", "cnn");
+
   });
 });
 

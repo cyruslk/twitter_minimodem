@@ -24,7 +24,6 @@ var volume = 0;
           volume = 20;
         }
             console.log(volume);
-
             loudness.setVolume(volume, function (err) {
                 // Done
             });
@@ -46,14 +45,17 @@ io.on("connection", socket => {
       return Math.floor(Math.random() * Math.floor(max));
     }
 
-    var randomNumberFromNews = getRandomInt(bodyObj.articles.length);
+    var finalArray = bodyObj.articles.map(function(ele){
+      return ele.source.name.replace(".com", "");
+    });
 
-    var randomTitle = bodyObj.articles[randomNumberFromNews].source.name;
-    // console.log("is?", bodyObj.articles.length);
-    bodyObj.articles.map(ele => console.log(ele.source.name));
+    var randomNumberFromNews = getRandomInt(finalArray.length);
+    var randomTitle =finalArray[randomNumberFromNews];
+
+
     console.log("this is the picked string", randomTitle);
 
-    twit.stream("statuses/filter", { track: "cnn" }, function(stream) {
+    twit.stream("statuses/filter", { track: randomTitle }, function(stream) {
       stream.on("data", function(data) {
         socket.emit("tweet", data.text);
         child.stdin.write(data.text);
