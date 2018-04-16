@@ -49,11 +49,12 @@ io.on("connection", socket => {
 
     var randomNumberFromNews = getRandomInt(finalArray.length);
     var randomTitle =finalArray[randomNumberFromNews];
+    console.log("this thing", randomTitle);
 
 
-    console.log("this is the picked string", "cnn");
+    console.log("this is the picked string", randomTitle);
 
-    twit.stream("statuses/filter", { track: "cnn"}, function(stream) {
+    twit.stream("statuses/filter", { track: randomTitle}, function(stream) {
       stream.on("data", function(data) {
         socket.emit("tweet", data.text);
         child.stdin.write(data.text);
