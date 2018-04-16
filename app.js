@@ -39,6 +39,17 @@ io.on("connection", socket => {
   request(theNews, function(error, response, body) {
     var bodyObj = JSON.parse(body);
 
+    function getRandomInt(max) {
+      return Math.floor(Math.random() * Math.floor(max));
+    }
+
+    var finalArray = bodyObj.articles.map(function(ele){
+      return ele.source.name.replace(".com", "");
+    });
+
+    var randomNumberFromNews = getRandomInt(finalArray.length);
+    var randomTitle =finalArray[randomNumberFromNews];
+
     console.log("this thing", randomTitle);
 
 
