@@ -55,12 +55,6 @@ io.on("connection", socket => {
 
     console.log("this is the picked string", randomTitle);
 
-    twit.stream("statuses/filter", { track: randomTitle}, function(stream) {
-      stream.on("data", function(data) {
-        socket.emit("tweet", data.text);
-        child.stdin.write(data.text);
-      });
-    });
 
   });
 });
