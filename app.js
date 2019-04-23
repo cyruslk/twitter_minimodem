@@ -10,6 +10,7 @@ const { spawn } = require("child_process");
 var child = spawn("minimodem", ["-t", "60"]);
 var kill = require('tree-kill');
 var twit = new twitter(require('./config.js'));
+var configNews = require("./config_news.js");
 
 var loudness = require('loudness');
 
@@ -34,8 +35,7 @@ var randomTitle;
 
 
 io.on("connection", socket => {
-  let theNews =
-    "https://newsapi.org/v2/top-headlines?country=us&apiKey=dd476a63cfa14c7f9c64ea594175b59e";
+  let theNews = `https://newsapi.org/v2/top-headlines?country=us&apiKey=${configNews.news_key}`;
   request(theNews, function(error, response, body) {
     var bodyObj = JSON.parse(body);
 
@@ -49,12 +49,7 @@ io.on("connection", socket => {
 
     var randomNumberFromNews = getRandomInt(finalArray.length);
     var randomTitle =finalArray[randomNumberFromNews];
-
-    console.log("this thing", randomTitle);
-
-
     console.log("this is the picked string", randomTitle);
-
     twit.stream("statuses/filter", { track: randomTitle}, function(stream) {
       stream.on("data", function(data) {
         socket.emit("tweet", data.text);
