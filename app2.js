@@ -42,18 +42,18 @@ io.on("connection", socket => {
   let theNews = `https://newsapi.org/v2/top-headlines?country=us&apiKey=${configNews.news_key}`;
 
   request(theNews, function(error, response, body) {
-    var bodyObj = JSON.parse(body);
+    let bodyObj = JSON.parse(body);
 
      getRandomInt = (max) => {
       return Math.floor(Math.random() * Math.floor(max));
     }
 
-    var finalArray = bodyObj.articles.map(function(ele){
+    let finalArray = bodyObj.articles.map(function(ele){
       return ele.source.name.replace(".com", "");
     });
 
-    var randomNumberFromNews = getRandomInt(finalArray.length);
-    var randomTitle =finalArray[randomNumberFromNews];
+    let randomNumberFromNews = getRandomInt(finalArray.length);
+    let randomTitle =finalArray[randomNumberFromNews];
 
 
     twit.stream("statuses/filter", { track: randomTitle }, function(stream) {
